@@ -13,22 +13,26 @@ const useStyles = makeStyles({
 	},
 	footer: {
 		textAlign: "center",
-        marginTop: 10,
+		marginTop: 10,
 	},
 	brand: {
 		fontWeight: "bold",
 		fontSize: "1.5rem",
 	},
-    grow:{
-        flexGrow: 1,
-    },
-    section:{
-        marginTop: 10,
-        marginBottom: 10,
-    },
-	form:{
+	grow: {
+		flexGrow: 1,
+	},
+	section: {
+		marginTop: 10,
+		marginBottom: 10,
+	},
+	form: {
 		maxWidth: 800,
-		margin: '0 auto',
-	}
+		margin: "0 auto",
+	},
+	navbarButton: {
+		color: "#ffffff",
+		textTransform: "initial",
+	},
 });
 export default useStyles;

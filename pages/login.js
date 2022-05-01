@@ -6,16 +6,29 @@ import {
 	Typography,
 	Link,
 } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Layout from "../components/Layout";
 import useStyles from "../utils/styles";
 import NextLink from "next/link";
 import axios from "axios";
+import { Store } from "../utils/Store";
+import{ useRouter } from 'next/router';
+import Cookies from 'js-cookie'
+
 
 const Login = () => {
+	const router = useRouter();
+	const {redirect} = router.query;
+	const { state, dispatch } = useContext(Store);
+	const {userInfo} = state;
+	if(userInfo){
+		router.push('/');
+	}
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const classes = useStyles();
+	
+
 	const submitHandler = async (e) => {
 		e.preventDefault();
 		try {
@@ -23,7 +36,9 @@ const Login = () => {
 				email,
 				password,
 			});
-			alert('sucess login')
+			dispatch({type: 'USER-LOGIN', payload: data})
+			Cookies.set('userInfo', JSON.stringify(data))
+			router.push(redirect || '/')
 		} catch (err) {
 			alert(err.response.data?err.response.data.message:err.message);
 		}
