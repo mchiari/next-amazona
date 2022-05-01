@@ -12,7 +12,7 @@ import {
 	MenuItem,
 } from "@material-ui/core";
 import Head from "next/head";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import NextLink from "next/link";
 import dynamic from "next/dynamic";
 import useStyles from "../utils/styles";
