@@ -54,10 +54,10 @@ const Register = () => {
 				email,
 				password,
 			});
-			dispatch({ type: "USER-LOGIN", payload: data });
+			dispatch({ type: "USER_LOGIN", payload: data });
 			Cookies.set("userInfo", JSON.stringify(data));
 			router.push(redirect || "/");
-			router.reload(window.location.pathname);
+			// router.reload(window.location.pathname);
 		} catch (err) {
 			enqueueSnackbar(
 				err.response.data ? err.response.data.message : err.message,
