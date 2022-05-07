@@ -19,26 +19,35 @@ const Shipping = () => {
 		handleSubmit,
 		control,
 		formState: { errors },
-    setValue
+		setValue,
 	} = useForm();
 	const router = useRouter();
 	const { state, dispatch } = useContext(Store);
-	const { userInfo, cart:{shippingAddress} } = state;
+	const {
+		userInfo,
+		cart: { shippingAddress },
+	} = state;
 
 	useEffect(() => {
 		if (!userInfo) {
 			router.push("/login?redirect=/shipping");
 		}
-    setValue('fullName',shippingAddress.fullName);
-    setValue('address',shippingAddress.address);
-    setValue('city',shippingAddress.city);
-    setValue('postalCode',shippingAddress.postalCode);
-    setValue('country',shippingAddress.country);
+		setValue("fullName", shippingAddress?.fullName);
+		setValue("address", shippingAddress?.address);
+		setValue("city", shippingAddress?.city);
+		setValue("postalCode", shippingAddress?.postalCode);
+		setValue("country", shippingAddress?.country);
 	});
 
 	const classes = useStyles();
 
-	const submitHandler = ({ fullName, address, city, postalCode, country }) => {
+	const submitHandler = ({
+		fullName,
+		address,
+		city,
+		postalCode,
+		country,
+	}) => {
 		dispatch({
 			type: "SAVE_SHIPPING_ADDRESS",
 			payload: { fullName, address, city, postalCode, country },
@@ -52,7 +61,7 @@ const Shipping = () => {
 	};
 	return (
 		<Layout title={"Shipping Address"}>
-      <CheckoutWizard activeStep={1} />
+			<CheckoutWizard activeStep={1} />
 			<form
 				className={classes.form}
 				onSubmit={handleSubmit(submitHandler)}
