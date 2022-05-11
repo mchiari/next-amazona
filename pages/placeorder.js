@@ -1,6 +1,7 @@
 import {
 	Button,
 	Card,
+	CircularProgress,
 	Grid,
 	Link,
 	List,
@@ -13,7 +14,7 @@ import {
 	TableRow,
 	Typography,
 } from "@material-ui/core";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Layout from "../components/Layout";
 import { Store } from "../utils/Store";
@@ -21,27 +22,67 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import useStyles from "../utils/styles";
+import Cookies from "js-cookie";
 import CheckoutWizard from "../components/checkoutWizard";
+import { getError } from "../utils/error";
+import axios from "axios";
+import { useSnackbar } from "notistack";
 
 function PlaceOrder() {
 	const router = useRouter();
-	const { state } = useContext(Store);
+	const { state, dispatch } = useContext(Store);
+	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 	const {
+		userInfo,
 		cart: { cartItems, shippingAddress, paymentMethod },
 	} = state;
 	const classes = useStyles();
+	const [loading, setLoading] = useState(false);
 
-	const round2 = num => Math.round(num*100 + Number.EPSILON)/100;
-	const itemsPrice = round2(cartItems.reduce((a,c) =>a+c.price*c.quantity, 0));
-	const shippingPrice = itemsPrice>200?0:15;
+	const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
+	const itemsPrice = round2(
+		cartItems.reduce((a, c) => a + c.price * c.quantity, 0)
+	);
+	const shippingPrice = itemsPrice > 200 ? 0 : 15;
 	const taxPrice = round2(itemsPrice * 0.15);
-	const totalPrice = round2(itemsPrice + shippingPrice + taxPrice)
+	const totalPrice = round2(itemsPrice + shippingPrice + taxPrice);
 
 	useEffect(() => {
 		if (!paymentMethod) {
 			router.push("/payment");
 		}
 	});
+
+	const placeOrderHandler = async () => {
+		closeSnackbar();
+		try {
+			setLoading(true);
+			const { data } = await axios.post(
+				"/api/orders",
+				{
+					orderItems: cartItems,
+					shippingAddress,
+					paymentMethod,
+					itemsPrice,
+					shippingPrice,
+					taxPrice,
+					totalPrice,
+				},
+				{
+					headers: {
+						authorization: `Bearer ${userInfo.token}`,
+					},
+				}
+			);
+			dispatch({ type: "CART_CLEAR" });
+			Cookies.remove("cartItems");
+			setLoading(false);
+			router.push(`/order/${data._id}`);
+		} catch (err) {
+			setLoading(false);
+			enqueueSnackbar(getError(err), { variant: "error" });
+		}
+	};
 
 	return (
 		<Layout title={"Place Order"}>
@@ -162,41 +203,51 @@ function PlaceOrder() {
 							</ListItem>
 							<ListItem>
 								<Grid container>
-									<Grid items xs={6}>
+									<Grid item xs={6}>
 										<Typography>Items:</Typography>
 									</Grid>
 									<Grid item xs={6}>
-										<Typography align="right">${itemsPrice}</Typography>
+										<Typography align='right'>
+											${itemsPrice}
+										</Typography>
 									</Grid>
 								</Grid>
 							</ListItem>
 							<ListItem>
 								<Grid container>
-									<Grid items xs={6}>
+									<Grid item xs={6}>
 										<Typography>Tax:</Typography>
 									</Grid>
 									<Grid item xs={6}>
-										<Typography align="right">${taxPrice}</Typography>
+										<Typography align='right'>
+											${taxPrice}
+										</Typography>
 									</Grid>
 								</Grid>
 							</ListItem>
 							<ListItem>
 								<Grid container>
-									<Grid items xs={6}>
+									<Grid item xs={6}>
 										<Typography>Shipping:</Typography>
 									</Grid>
 									<Grid item xs={6}>
-										<Typography align="right">${shippingPrice}</Typography>
+										<Typography align='right'>
+											${shippingPrice}
+										</Typography>
 									</Grid>
 								</Grid>
 							</ListItem>
 							<ListItem>
 								<Grid container>
-									<Grid items xs={6}>
-										<Typography><strong>Total:</strong></Typography>
+									<Grid item xs={6}>
+										<Typography>
+											<strong>Total:</strong>
+										</Typography>
 									</Grid>
 									<Grid item xs={6}>
-										<Typography align="right"><strong>${totalPrice}</strong></Typography>
+										<Typography align='right'>
+											<strong>${totalPrice}</strong>
+										</Typography>
 									</Grid>
 								</Grid>
 							</ListItem>
@@ -205,10 +256,16 @@ function PlaceOrder() {
 									variant='contained'
 									color='primary'
 									fullWidth
+									onClick={placeOrderHandler}
 								>
 									Place Order
 								</Button>
 							</ListItem>
+							{loading && (
+								<ListItem>
+									<CircularProgress />
+								</ListItem>
+							)}
 						</List>
 					</Card>
 				</Grid>
