@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { useForm, Controller } from "react-hook-form";
 import { useSnackbar } from "notistack";
+import { getError } from "../utils/error";
 
 const Login = () => {
 	const {
@@ -50,7 +51,7 @@ const Login = () => {
 			// router.reload(window.location.pathname);
 		} catch (err) {
 			enqueueSnackbar(
-				err.response.data ? err.response.data.message : err.message,
+				getError(err),
 				{ variant: "error" }
 			);
 		}

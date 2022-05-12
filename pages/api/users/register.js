@@ -1,4 +1,3 @@
-
 import bcryptjs from "bcryptjs";
 import nc from "next-connect";
 import User from "../../../models/User";
