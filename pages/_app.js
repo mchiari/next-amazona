@@ -5,7 +5,6 @@ import "../styles/globals.css";
 import { StoreProvider } from "../utils/Store";
 
 function MyApp({ Component, pageProps }) {
-	require("dotenv").config();
 	useEffect(() => {
 		const jssStyles = document.querySelector("#jss-server-side");
 		if (jssStyles) {
