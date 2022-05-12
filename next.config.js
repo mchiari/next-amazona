@@ -11,9 +11,6 @@ const nextConfig = {
     if (!isServer) {
         config.resolve.fallback = {
             fs: false,
-            process: true,
-            path: true,
-            os: true,
         }
     }
 
