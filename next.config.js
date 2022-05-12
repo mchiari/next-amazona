@@ -10,7 +10,10 @@ const nextConfig = {
   webpack: (config, { isServer }) => {
     if (!isServer) {
         config.resolve.fallback = {
-            fs: false
+            fs: false,
+            process: false,
+            path: false,
+            os: false,
         }
     }
 
