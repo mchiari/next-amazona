@@ -4,6 +4,7 @@ import React from "react";
 
 export default class MyDocument extends Document {
     render(){
+        require("dotenv").config();
         return (
             <Html lang='en'>
                 <Head>
