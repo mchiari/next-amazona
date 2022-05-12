@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import { Store } from "../utils/Store";
 import { useRouter } from "next/router";
 import Layout from "../components/Layout";
-import CheckoutWizard from "../components/checkoutWizard";
+import CheckoutWizard from "../components/CheckoutWizard";
 import useStyles from "../utils/styles";
 import {
 	Button,

@@ -23,7 +23,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import useStyles from "../utils/styles";
 import Cookies from "js-cookie";
-import CheckoutWizard from "../components/checkoutWizard";
+import CheckoutWizard from "../components/CheckoutWizard";
 import { getError } from "../utils/error";
 import axios from "axios";
 import { useSnackbar } from "notistack";
