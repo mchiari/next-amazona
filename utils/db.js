@@ -16,7 +16,7 @@ async function connect(){
         }
         await mongoose.disconnect()
     }
-    const db = await mongoose.connect(process.env.MONGODB_URI, {});
+    const db = await mongoose.connect('mongodb+srv://chiarimatheus:templosalomao33@cluster0.lfczi.mongodb.net/next-amazona', {});
     console.log('new connection');
     connection.isConnected = db.connections[0].readyState;
 }
