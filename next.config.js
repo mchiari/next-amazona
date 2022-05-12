@@ -2,12 +2,15 @@
 
 const nextConfig = {
 	reactStrictMode: false,
-  webpack5: true,
-	webpack: (config) => {
-		config.resolve.fallback = { ...config.resolve.fallback, fs: false };
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+        config.resolve.fallback = {
+            fs: false
+        }
+    }
 
-		return config;
-	},
+    return config;
+}
 };
 
 module.exports = nextConfig;
