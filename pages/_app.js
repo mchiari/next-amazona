@@ -3,10 +3,9 @@ import { SnackbarProvider } from "notistack";
 import { useEffect } from "react";
 import "../styles/globals.css";
 import { StoreProvider } from "../utils/Store";
-import 'dotenv/config'
-require('dotenv').config()
+
 function MyApp({ Component, pageProps }) {
-	require('dotenv').config()
+
 	useEffect(() => {
 		const jssStyles = document.querySelector("#jss-server-side");
 		if (jssStyles) {
