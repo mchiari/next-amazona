@@ -13,7 +13,8 @@ const useStyles = makeStyles({
 	},
 	footer: {
 		textAlign: "center",
-		marginTop: 10,
+		marginTop: 40,
+		marginBottom: 30
 	},
 	brand: {
 		fontWeight: "bold",

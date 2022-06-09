@@ -60,10 +60,6 @@ function Layout({ title, children, description }) {
 		setAnchorEl(e.currentTarget);
 	};
 	const loginMenuCloseHandler = (e, redirect) => {
-		if(redirect === 'backdropClick'){
-			setAnchorEl(null);
-			return
-		}
 		setAnchorEl(null);
 		if (redirect) {
 			router.push(redirect);
@@ -169,7 +165,7 @@ function Layout({ title, children, description }) {
 				</AppBar>
 				<Container className={classes.main}>{children}</Container>
 				<footer className={classes.footer}>
-					<Typography>All rights reserved. Next Amazona.</Typography>
+					<Typography>Study project made by <Link href="https://github.com/mchiari/next-amazona">Matheus Chiari - Github</Link>.</Typography>
 				</footer>
 			</ThemeProvider>
 		</div>
