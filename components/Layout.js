@@ -60,6 +60,10 @@ function Layout({ title, children, description }) {
 		setAnchorEl(e.currentTarget);
 	};
 	const loginMenuCloseHandler = (e, redirect) => {
+		if(redirect === 'backdropClick'){
+			setAnchorEl(null);
+			return
+		}
 		setAnchorEl(null);
 		if (redirect) {
 			router.push(redirect);
