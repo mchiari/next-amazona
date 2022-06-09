@@ -6,13 +6,20 @@ This is a study project made by me to try to understand tha basics of fullstack 
 
 ## Technologies used in this project:
 
-> Javascript \n
+> Javascript
+> 
 > React
+> 
 > Next.js
+> 
 > Material UI
+> 
 > MongoDB
+> 
 > React Hook Form
+> 
 > Paypal API
+> 
 > And others.
 
 
