@@ -6,7 +6,7 @@ This is a study project made by me to try to understand tha basics of fullstack 
 
 ## Technologies used in this project:
 
-> Javascript
+> Javascript \n
 > React
 > Next.js
 > Material UI
